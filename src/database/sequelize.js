@@ -1,9 +1,12 @@
 const Sequelize = require('sequelize');
 
-const sequelize = new Sequelize('pccw_db', 'pccw_user', 'pccw_password', {
-  host: 'localhost',
-  port: 5433,
-  dialect: 'postgres',
+const env = process.env.NODE_ENV || 'development';
+const { database, username, password, host, port, dialect } = require('../configs/config.json')[env];
+
+const sequelize = new Sequelize(database, username, password, {
+  host: host,
+  port: port,
+  dialect: dialect,
 });
 
 module.exports = sequelize;
