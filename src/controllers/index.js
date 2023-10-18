@@ -4,6 +4,7 @@ const updateMessageController = require('./updateMessageController');
 const unreadMessagesController = require('./unreadMessagesController');
 const getUsersController = require('./getUsersController');
 const getMessagesBetweenUsersController = require('./getMessagesBetweenUsersController');
+const getUsersSortedByRecentMessageController = require('./getUsersSortedByRecentMessageController')
 
 module.exports = {
   importDataController,
@@ -12,4 +13,5 @@ module.exports = {
   unreadMessagesController,
   getUsersController,
   getMessagesBetweenUsersController,
+  getUsersSortedByRecentMessageController
 };

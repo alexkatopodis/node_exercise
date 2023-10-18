@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../database/sequelize');
+const Messages = require('./Messages');
 
 const Users = sequelize.define('Users', {
   id: {
@@ -30,5 +31,11 @@ const Users = sequelize.define('Users', {
 }, {
   timestamps: false
 });
+
+Users.hasMany(Messages, { foreignKey: 'sender', as: 'sentMessages' });
+Users.hasMany(Messages, { foreignKey: 'receiver', as: 'receivedMessages' });
+
+Messages.belongsTo(Users, { foreignKey: 'sender', as: 'messageSender' });
+Messages.belongsTo(Users, { foreignKey: 'receiver', as: 'messageReceiver' });
 
 module.exports = Users;

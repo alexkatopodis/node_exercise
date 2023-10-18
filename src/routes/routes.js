@@ -7,6 +7,7 @@ const {
   unreadMessagesController,
   getUsersController,
   getMessagesBetweenUsersController,
+  getUsersSortedByRecentMessageController
 } = require("../controllers");
 
 router.post("/feedDB", importDataController);
@@ -15,5 +16,7 @@ router.put("/updateMessage/:id", updateMessageController);
 router.get("/unreadMessages", unreadMessagesController);
 router.get("/getUsers", getUsersController);
 router.get("/getMessagesBetweenUsers", getMessagesBetweenUsersController);
+router.get('/getUsersSortedByRecentMessage', getUsersSortedByRecentMessageController);
+
 
 module.exports = router;
