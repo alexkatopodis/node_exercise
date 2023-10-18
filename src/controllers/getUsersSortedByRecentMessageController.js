@@ -1,4 +1,4 @@
-const { Op, Sequelize } = require('sequelize');
+const { Op } = require('sequelize');
 const Users = require('../models/Users');
 const Messages = require('../models/Messages');
 
@@ -23,8 +23,8 @@ async function getUsersSortedByRecentMessage(req, res) {
     const usersWithRecentMessages = await Users.findAll({
       attributes: ['id', 'firstName', 'lastName', 'birthdate', 'gender', 'username'],
       where: {
-        [Op.not]: {
-          id: userId,
+        id: {
+          [Op.not]: userId,
         },
       },
       include: [
@@ -32,18 +32,14 @@ async function getUsersSortedByRecentMessage(req, res) {
           model: Messages,
           as: 'sentMessages',
           where: {
-            sender: {
-              [Op.eq]: Sequelize.col('Users.id'),
-            },
+            receiver: userId,
           },
         },
         {
           model: Messages,
           as: 'receivedMessages',
           where: {
-            receiver: {
-              [Op.eq]: Sequelize.col('Users.id'),
-            },
+            sender: userId,
           },
         },
       ],
