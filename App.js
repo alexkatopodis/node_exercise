@@ -4,6 +4,15 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const app = express();
 const routes = require('./src/routes/routes');
+const sequelize = require('./src/database/sequelize');
+
+sequelize.sync()
+  .then(() => {
+    console.log('Tables created.');
+  })
+  .catch((error) => {
+    console.error('Error to created tables:', error);
+  });
 
 app.use(morgan('dev', {
 	skip: function (req, res) { return res.statusCode > 400 }
