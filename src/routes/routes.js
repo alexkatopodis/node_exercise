@@ -7,11 +7,8 @@ const path = require('path');
 
 router.post('/feedDB', async (req, res) => {
   try {
-
     const filePath = path.resolve(__dirname, 'data/seeds.xlsx');
-
     const usersData = await readXlsxFile(filePath, { sheet: 'users' });
-
     const messagesData = await readXlsxFile(filePath, { sheet: 'messages' });
 
     const usersWithBirthdate = usersData.map((row) => {
@@ -38,15 +35,35 @@ router.post('/feedDB', async (req, res) => {
       };
     });
 
+    const existingUserIds = await Users.findAll({
+      attributes: ['id'],
+      where: {
+        id: usersWithBirthdate.map((user) => user.id),
+      },
+    });
 
-    await Users.bulkCreate(usersWithBirthdate);
+    const existingUserIdsSet = new Set(existingUserIds.map((user) => user.id));
 
-    await Messages.bulkCreate(messagesToInsert);
+    const usersToInsert = usersWithBirthdate.filter((user) => !existingUserIdsSet.has(user.id));
 
+    const existingMessageIds = await Messages.findAll({
+      attributes: ['id'],
+      where: {
+        id: messagesToInsert.map((message) => message.id),
+      },
+    });
+
+    const existingMessageIdsSet = new Set(existingMessageIds.map((message) => message.id));
+
+    const messagesToInsertFiltered = messagesToInsert.filter(
+      (message) => !existingMessageIdsSet.has(message.id)
+    );
+
+    await Users.bulkCreate(usersToInsert);
+    await Messages.bulkCreate(messagesToInsertFiltered);
 
     res.status(200).json({ message: 'Success imported.' });
   } catch (error) {
-
     console.error('Error Import:', error);
     res.status(500).json({ error: 'Error Import.' });
   }
