@@ -1,4 +1,4 @@
-const sequelize = require('./database/sequelize');
+const sequelize = require('./src/database/sequelize');
 
 sequelize
   .authenticate()

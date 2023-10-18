@@ -6,5 +6,4 @@ const sequelize = new Sequelize('pccw_db', 'pccw_user', 'pccw_password', {
   dialect: 'postgres',
 });
 
-
 module.exports = sequelize;
