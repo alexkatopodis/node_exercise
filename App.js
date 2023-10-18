@@ -3,7 +3,7 @@ const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const app = express();
-const routes = require('./routes/routes');
+const routes = require('./src/routes/routes');
 
 app.use(morgan('dev', {
 	skip: function (req, res) { return res.statusCode > 400 }
