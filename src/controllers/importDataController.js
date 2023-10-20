@@ -5,7 +5,8 @@ const Messages = require('../models/Messages');
 
 const importDataController = async (req, res) => {
   try {
-    const filePath = path.resolve(__dirname, 'data/seeds.xlsx');
+    const filePath = path.resolve(__dirname, req.file.path);
+
     const usersData = await readXlsxFile(filePath, { sheet: 'users' });
     const messagesData = await readXlsxFile(filePath, { sheet: 'messages' });
 
