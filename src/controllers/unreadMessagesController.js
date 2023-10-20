@@ -2,8 +2,11 @@ const Messages = require('../models/Messages');
 
 const unreadMessagesController = async (req, res) => {
   try {
+    const { userId } = req.query;
+
     const unreadMessages = await Messages.findAll({
       where: {
+        receiver: userId,
         seen: false,
       },
     });
