@@ -3,8 +3,8 @@
     "username": "pccw_user",
     "password": "pccw_password",
     "database": "pccw_db",
-    "host": "localhost",
-    "port": 5433,
+    "host": "postgres_db",
+    "port": 5432,
     "dialect": "postgres"
   }
 }
